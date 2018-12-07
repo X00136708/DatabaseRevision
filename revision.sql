@@ -1,0 +1,15 @@
+Q1: db.order.find( {_id: 10001}, {"name.first": 1} ).pretty()
+Q2: db.order.find( {"name.first": "John", "name.last": "McCarthy"}, {shippingAddress:1} ).pretty()
+Q3: db.order.find( {"name.first": "John", "name.last":"McCarthy"}, {ShippingAddress:1} ).pretty()
+Q4: db.order.find( {"name.first": "John", "name.last":"McCarthy", _id: 9999}, {ShippingAddress:1} ).pretty()
+Q5: db.order.find( {"name.first": "John", "name.last": "Murphy", _id: 10002}, {"lineItems": 1} )
+Q6: db.order.find( {"name.first": "John", "name.last": "Murphy", _id: 10002}, {"lineItems.product": 1} )
+Q7: db.order.find({$and: [{"lineItems.qty": {$gt:5}}, {"lineItems.product": "grout"}, {"lineItems.uom": "kg"}]}, {"name.last":1}).pretty()
+Q8: db.order.find({$and: [{"lineItems.product": "fuel"}, {"lineItems.uom": "litres"}, {$or: [{"lineItems.qty": 30}, {"lineItems.qty": 50}]}]} ,{"name.first":1, "name.last":1}).pretty()
+Q9: db.order.update({}, {$set: {"ShippingAddress.eircode": "A54F2E1" }}, {"multi":true})
+Q10: db.order.count({"_id": {$gt: 0}}) /* 4 */ 
+Q11: db.order.count({"ShippingAddress.line2": "Tallaght"}) /* 2 */
+Q12: db.order.update( {" _id": 10002 , "lineItems.product": "grout" }, {$inc: {"lineItems.$.unitPrice":6} } )
+Q13: db.order.update({"_id": 9999, "lineItems.product": "screws"}, {$set: {"lineItems.$.qty": 30}})
+Q14: db.order.update({"_id": 10000}, {"ShippingAddress.postcode": 24})
+Q15: db.order.deleteOne({"_id": 10000})
